@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    Created By Jason Tan
+    github: https://github.com/A0150315 
+    Only for study
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>index</title>
+</head>
+
+<body>
+    <div id="index">
+        <h1>index</h1>
+        <a id="index2editor" style="cursor:pointer">Go to editor page or shopcart page</a>
+        <b>← click this</b>
+    </div>
+    <div id="editor" style="display:none">
+        <h1>editor or shopcart</h1>
+        <a id="back" style="cursor:pointer">succeed and back</a>
+        <br> or
+        <br>
+        <a id="new" style="cursor:pointer">succeed and new</a>
+    </div>
+    <hr>History's qutity:
+    <h2 id="qutity"></h2>
+</body>
+<script>
+    // 该DEMO总体思路为模拟单页面的实现，路由手动写入，所有动作由JS操作
+
+    // ---------------------
+    //查看历史记录长度的代码，仅供参考
+    const qutity = document.querySelector('#qutity');
+    qutity.innerText = history.length;
+    setInterval(() => {
+        qutity.innerText = history.length;
+    }, 200)
+    // ---------------------
+
+    const index = document.querySelector('#index');
+    const editor = document.querySelector('#editor');
+    let flag = 0;
+    document.querySelector('#index2editor').addEventListener('click', () => {//打开编辑页或购物车
+        history.pushState(null, "editor or shopcart page", "editor.html");
+        index.style = 'display: none';
+        editor.style = 'display: block';
+    });
+    document.querySelector('#back').addEventListener('click', () => {//成功提交，返回上一级
+        flag = 1;
+        alert('Succeed')
+        window.history.back();//模拟后退
+    });
+    document.querySelector('#new').addEventListener('click', () => {//成功提交，转到新的页面
+        flag = 1;
+        alert('Succeed')
+        document.location.replace('./new.html');//替换路由，不允许返回到编辑页
+    });
+    window.onpopstate = () => {//监听前进后退动作
+        if (/\/editor.html/.test(location.pathname)) {
+            index.style = 'display: none';
+            editor.style = 'display: block';
+            return;
+        }
+        if (!flag) {
+            alert('SAVED')
+            flag = 0;
+        }
+        editor.style = 'display: none';
+        index.style = 'display: block';
+    };
+</script>
+
+</html>

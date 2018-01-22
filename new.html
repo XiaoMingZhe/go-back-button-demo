@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    Created By Jason Tan
+    github: https://github.com/A0150315 
+    Only for study
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>new</title>
+</head>
+
+<body>
+    <b style="visibility:hidden" id="then">↑ and click GO-BACK button,NOT ME!!!!!</b>
+    <h1>new</h1>
+    <a>You can try to click go-back button</a>
+    <b id="first">→ click me</b>
+    <hr>History's qutity:
+    <h2 id="qutity"></h2>
+</body>
+<script>
+    // ---------------------
+    //查看历史记录的代码，仅供参考
+    const qutity = document.querySelector('#qutity');
+    qutity.innerText = history.length;
+    setInterval(() => {
+        qutity.innerText = history.length;
+    }, 200)
+    // ---------------------
+
+    // ---------------------
+    // beforeunload事件
+    window.addEventListener("beforeunload", e => {
+        const confirmationMessage = "\o/";
+        (e || window.event).returnValue = confirmationMessage;     // Gecko and Trident
+        return confirmationMessage;                                // Gecko and WebKit
+    });
+    // ---------------------
+
+    const first = document.querySelector('#first'), then = document.querySelector('#then');
+    first.addEventListener('click', () => {//指导用户交互，以触发beforeunload事件
+        then.style.visibility = "visible";
+        first.style.visibility = "hidden";
+    })
+</script>
+
+</html>
